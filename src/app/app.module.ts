@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from '../app/auth-interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LogoComponent } from './logo/logo.component';
@@ -35,7 +35,9 @@ import { SignUpLoginComponent } from './sign-up-login/sign-up-login.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [MovieService, MovieApiService, ApiService],
+  providers: [MovieService, MovieApiService, ApiService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
